@@ -3,10 +3,7 @@
   "mcpServers": {
     "mayar": {
       "type": "streamable-http",
-      "url": "https://mcp.mayar.id/mcp",
-      "headers": {
-        "Authorization": "Bearer ${MAYAR_API_KEY}"
-      }
+      "url": "https://mcp.mayar.id/mcp"
     }
   }
 }
