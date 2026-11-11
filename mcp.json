@@ -1,0 +1,12 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "mayar": {
+      "type": "streamable-http",
+      "url": "https://mcp.mayar.id/mcp",
+      "headers": {
+        "Authorization": "Bearer ${MAYAR_API_KEY}"
+      }
+    }
+  }
+}

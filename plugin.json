@@ -1,0 +1,23 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "mayar",
+  "version": "1.0.0",
+  "description": "Manage Mayar invoices, payment links, products, customers, transactions, memberships, coupons, webhooks and QRIS through Mayar's official hosted MCP server.",
+  "author": {
+    "name": "Mayar",
+    "url": "https://mayar.id/"
+  },
+  "homepage": "https://mayar.id/",
+  "repository": "https://github.com/mayarid/mayar-agent-plugin",
+  "license": "MIT",
+  "keywords": ["mayar", "payments", "invoices", "qris", "indonesia", "mcp", "hermes-agent"],
+  "extensions": {
+    "com.nousresearch.hermes": {
+      "servers": {
+        "mayar": {
+          "trust": "untrusted"
+        }
+      }
+    }
+  }
+}
