@@ -13,6 +13,14 @@
   "keywords": ["mayar", "payments", "invoices", "qris", "indonesia", "mcp", "hermes-agent"],
   "extensions": {
     "com.nousresearch.hermes": {
+      "config_schema": {
+        "api_key": {
+          "type": "secret",
+          "env": "MAYAR_API_KEY",
+          "label": "Mayar API key",
+          "description": "Production API key from the Mayar dashboard (Integration > Api Keys)."
+        }
+      },
       "servers": {
         "mayar": {
           "trust": "untrusted"

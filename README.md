@@ -11,7 +11,8 @@ configuration only. It contains no executable code.
 ## Requirements
 
 - A Mayar account.
-- A production API key from [web.mayar.id/api-keys](https://web.mayar.id/api-keys).
+- A production API key. Get it in the Mayar dashboard under Integration > Api Keys
+  ([web.mayar.id/api-keys](https://web.mayar.id/api-keys)).
 
 ## Install in Hermes Agent
 
@@ -20,19 +21,65 @@ hermes plugins install mayarid/mayar-agent-plugin --no-enable
 hermes plugins enable mayar
 ```
 
-Put your key in `~/.hermes/.env`:
+Set your API key (see below). Restart Hermes. Then ask: "Use Mayar. Call the account tool with
+action balance." A working key returns your balance.
+
+## Install in Cursor
+
+[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.png)](cursor://anysphere.cursor-deeplink/mcp/install?name=mayar&config=eyJ1cmwiOiJodHRwczovL21jcC5tYXlhci5pZC9tY3AiLCJoZWFkZXJzIjp7IkF1dGhvcml6YXRpb24iOiJCZWFyZXIgJHtlbnY6TUFZQVJfQVBJX0tFWX0ifX0=)
+
+The button adds Mayar's hosted MCP server to Cursor. Set `MAYAR_API_KEY` first (see below). This
+repository also includes a Cursor config file at `.mcp.json`.
+
+## Set your API key
+
+Mayar does not use OAuth. Every client sends your production API key in the `Authorization`
+header. Get the key in the Mayar dashboard: Integration > Api Keys
+([web.mayar.id/api-keys](https://web.mayar.id/api-keys)).
+
+### Cursor
+
+Set the `MAYAR_API_KEY` environment variable. The Add to Cursor button and `.mcp.json` send it as
+`Authorization: Bearer ${env:MAYAR_API_KEY}`.
+
+### Hermes
+
+Put the key in `~/.hermes/.env`, or set it in the plugin settings form:
 
 ```sh
 MAYAR_API_KEY=your-production-key
 ```
 
-Restart Hermes. Then ask: "Use Mayar. Call the account tool with action balance."
-A working key returns your balance.
+Agent Plugins v1.0.0 does not allow secrets or placeholders in `mcp.json` remote headers. Hermes
+does not yet attach this key from the plugin extension alone. Add this block to your Hermes
+`config.yaml` so Hermes sends the header. A same-name entry replaces the package server, so keep
+`trust: untrusted`:
 
-## Other clients
+```yaml
+mcp_servers:
+  mayar:
+    url: https://mcp.mayar.id/mcp
+    headers:
+      Authorization: "Bearer ${MAYAR_API_KEY}"
+    trust: untrusted
+```
+
+### Claude Code
+
+Set `MAYAR_API_KEY`, then run:
+
+```sh
+claude mcp add --transport http mayar https://mcp.mayar.id/mcp \
+  --header "Authorization: Bearer $MAYAR_API_KEY"
+```
+
+The shell expands `$MAYAR_API_KEY` when you run the command.
+
+### Other clients
 
 The same server works in any MCP client that speaks Streamable HTTP. Send the key in the
-`Authorization` header (the `Bearer` prefix is optional). See `mcp.json` for the config.
+`Authorization` header. The `Bearer` prefix is optional. The server URL is
+`https://mcp.mayar.id/mcp`.
 
 ## Tools
 
@@ -52,7 +99,8 @@ Each domain is one tool with an `action` argument: `account`, `invoice`, `instal
 - Account data that the tools return (customers, transactions, balances) goes to your model
   provider.
 - The tool list comes from the server at run time. The pinned commit does not cover it.
-- The plugin stores no credentials. Hermes reads `MAYAR_API_KEY` from its own environment.
+- The plugin stores no credentials. You set `MAYAR_API_KEY` in the client. This package's
+  `mcp.json` does not include an `Authorization` header.
 
 ## License
 
