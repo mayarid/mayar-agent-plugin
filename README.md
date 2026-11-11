@@ -29,7 +29,38 @@ action balance." A working key returns your balance.
 [![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.png)](cursor://anysphere.cursor-deeplink/mcp/install?name=mayar&config=eyJ1cmwiOiJodHRwczovL21jcC5tYXlhci5pZC9tY3AiLCJoZWFkZXJzIjp7IkF1dGhvcml6YXRpb24iOiJCZWFyZXIgJHtlbnY6TUFZQVJfQVBJX0tFWX0ifX0=)
 
 The button adds Mayar's hosted MCP server to Cursor. Set `MAYAR_API_KEY` first (see below). This
-repository also includes a Cursor config file at `.mcp.json`.
+repository also includes a Cursor config file at `.mcp.json`. Cursor and
+[cursor.directory](https://cursor.directory) read that root file. It uses Cursor's
+`${env:MAYAR_API_KEY}` syntax. Do not change it for Claude Code.
+
+## Install in Claude Code
+
+This repository also ships a Claude plugin in `plugins/mayar` (manifest, skill, license, and a
+Claude `.mcp.json`). Anthropic's directory can list that subfolder through the submission
+"Plugin path" field. The root `.mcp.json` stays the Cursor file, because the two clients expand
+environment variables differently.
+
+Claude Code requires `"type": "http"` on a remote server and expands `${MAYAR_API_KEY}` in
+headers. It does not expand `${env:MAYAR_API_KEY}`. The plugin file at
+`plugins/mayar/.mcp.json` uses the Claude Code form.
+
+Set `MAYAR_API_KEY` (see below), then load the plugin from a local clone:
+
+```sh
+claude --plugin-dir ./plugins/mayar
+```
+
+Or add this repository as a marketplace and install `mayar`:
+
+```sh
+claude plugin marketplace add mayarid/mayar-agent-plugin
+claude plugin install mayar@mayarid
+```
+
+You can still add the server by hand with `claude mcp add` (see Claude Code under Set your API
+key). Mayar has no OAuth. On claude.ai and in Cowork, the plugin skill loads, but the Connectors
+tab expects an OAuth sign-in that Mayar does not offer, so tool calls there cannot authenticate
+with an API key the way Claude Code can.
 
 ## Set your API key
 
@@ -66,7 +97,9 @@ mcp_servers:
 
 ### Claude Code
 
-Set `MAYAR_API_KEY`, then run:
+Set `MAYAR_API_KEY`. If you installed the plugin in `plugins/mayar`, Claude Code reads
+`Authorization: Bearer ${MAYAR_API_KEY}` from that folder's `.mcp.json`. To add the server
+by hand instead:
 
 ```sh
 claude mcp add --transport http mayar https://mcp.mayar.id/mcp \

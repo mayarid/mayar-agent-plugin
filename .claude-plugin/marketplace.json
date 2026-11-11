@@ -1,0 +1,15 @@
+{
+  "name": "mayarid",
+  "description": "Official Mayar plugins for Claude.",
+  "owner": {
+    "name": "Mayar",
+    "url": "https://mayar.id/"
+  },
+  "plugins": [
+    {
+      "name": "mayar",
+      "source": "./plugins/mayar",
+      "description": "Manage Mayar invoices, payment links, products, customers, and QRIS through Mayar's official hosted MCP server."
+    }
+  ]
+}

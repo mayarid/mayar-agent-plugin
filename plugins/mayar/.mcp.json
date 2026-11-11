@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "mayar": {
+      "type": "http",
+      "url": "https://mcp.mayar.id/mcp",
+      "headers": {
+        "Authorization": "Bearer ${MAYAR_API_KEY}"
+      }
+    }
+  }
+}
