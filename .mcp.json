@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "mayar": {
+      "url": "https://mcp.mayar.id/mcp",
+      "headers": {
+        "Authorization": "Bearer ${env:MAYAR_API_KEY}"
+      }
+    }
+  }
+}

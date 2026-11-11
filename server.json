@@ -8,6 +8,15 @@
     "source": "github"
   },
   "websiteUrl": "https://mayar.id",
+  "icons": [
+    {
+      "src": "https://framerusercontent.com/images/bbv2nhY3LkxyXJP6QGzHIHGHw.png",
+      "mimeType": "image/png",
+      "sizes": [
+        "1024x1024"
+      ]
+    }
+  ],
   "version": "1.0.0",
   "remotes": [
     {
