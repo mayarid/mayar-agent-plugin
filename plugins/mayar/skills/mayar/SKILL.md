@@ -9,11 +9,11 @@ The `mayar` MCP server connects to the user's Mayar account at
 `https://mcp.mayar.id/mcp`. It uses the production Mayar API (`api.mayar.id`).
 Every write moves real money or changes live data.
 
-Mayar has no OAuth. Claude Code must send a production API key as
-`Authorization: Bearer ${MAYAR_API_KEY}`. Get a key at
+Mayar has no OAuth. Claude Code sends a production API key from the
+plugin config in the Authorization header. Get a key at
 https://web.mayar.id/api-keys. If a tool returns a missing or invalid key
-error, tell the user to set `MAYAR_API_KEY` and restart the client. Do not
-start an OAuth or sign-in flow.
+error, tell the user to set the key with `/plugin configure mayar@mayarid`
+and restart Claude Code. Do not start an OAuth or sign-in flow.
 
 ## Tools
 

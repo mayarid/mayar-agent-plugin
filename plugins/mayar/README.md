@@ -7,19 +7,20 @@ coupons, webhooks, reviews, QRIS, and license codes.
 
 ## Use it
 
-Mayar does not use OAuth and never will. In Claude Code, set the
-`MAYAR_API_KEY` environment variable to your production key from
-https://web.mayar.id/api-keys, then restart Claude Code. This plugin sends the
-key as `Authorization: Bearer ${MAYAR_API_KEY}`. Claude Code expands
-`${MAYAR_API_KEY}`; it does not expand the Cursor form `${env:MAYAR_API_KEY}`.
+Mayar does not use OAuth and never will. In Claude Code, the plugin asks for
+your production API key when you install or enable it in a session. Get a key
+from https://web.mayar.id/api-keys. The plugin sends the key as
+`Authorization: Bearer ${user_config.mayar_api_key}`. Claude Code stores the
+key in secure storage. It does not read `MAYAR_API_KEY` from your environment.
 
-An unset `MAYAR_API_KEY` and an empty one fail in different ways. If the variable is unset, Claude Code sends the
-unexpanded text `${MAYAR_API_KEY}` as the key, so the server can show as
-Connected, but every tool call fails because Mayar rejects that value. If the
-variable is set but empty, Claude Code expands it to an empty header. The
-server returns 401 and does not show as Connected. In both cases, set
-`MAYAR_API_KEY` to a real production key from https://web.mayar.id/api-keys
-and restart Claude Code.
+To set or change the key later, run this command in a Claude Code session:
+
+```
+/plugin configure mayar@mayarid
+```
+
+If a tool returns a missing or invalid key error, set the key with that
+command and restart Claude Code.
 
 In Claude Code 2.1.275 or later you can install from this marketplace in one
 step:
@@ -27,6 +28,10 @@ step:
 ```
 /plugin install mayar --marketplace mayarid/mayar-agent-plugin
 ```
+
+A shell install (`claude plugin install`) does not open the key dialog. Pass
+`--config mayar_api_key=YOUR_KEY` on install, or run `/plugin configure
+mayar@mayarid` in a session afterward.
 
 Ask Claude to check your Mayar balance, list invoices, or create a payment
 link. The bundled skill tells Claude to confirm with you before any create,
