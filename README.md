@@ -98,9 +98,7 @@ mcp_servers:
 ### Claude Code
 
 Set `MAYAR_API_KEY` to a real production key, then restart Claude Code. An unset
-variable and an empty one fail in different ways. If the variable is unset, Claude
-Code warns in `claude mcp list` and `/mcp` that header values reference unset
-environment variables. It still sends the unexpanded text `${MAYAR_API_KEY}` as
+variable and an empty one fail in different ways. If the variable is unset, Claude Code sends the unexpanded text `${MAYAR_API_KEY}` as
 the key, so the server can show as Connected, but every tool call fails because
 Mayar rejects that value. If the variable is set but empty, Claude Code expands
 it to an empty header. The server returns 401 and does not show as Connected.

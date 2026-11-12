@@ -13,9 +13,7 @@ https://web.mayar.id/api-keys, then restart Claude Code. This plugin sends the
 key as `Authorization: Bearer ${MAYAR_API_KEY}`. Claude Code expands
 `${MAYAR_API_KEY}`; it does not expand the Cursor form `${env:MAYAR_API_KEY}`.
 
-An unset `MAYAR_API_KEY` and an empty one fail in different ways. If the
-variable is unset, Claude Code warns in `claude mcp list` and `/mcp` that
-header values reference unset environment variables. It still sends the
+An unset `MAYAR_API_KEY` and an empty one fail in different ways. If the variable is unset, Claude Code sends the
 unexpanded text `${MAYAR_API_KEY}` as the key, so the server can show as
 Connected, but every tool call fails because Mayar rejects that value. If the
 variable is set but empty, Claude Code expands it to an empty header. The
