@@ -11,7 +11,7 @@ Mayar does not use OAuth and never will. In Claude Code, the plugin asks for
 your production API key when you install or enable it in a session. Get a key
 from https://web.mayar.id/api-keys. The plugin sends the key as
 `Authorization: Bearer ${user_config.mayar_api_key}`. Claude Code stores the
-key in secure storage. It does not read `MAYAR_API_KEY` from your environment.
+key outside `settings.json` (macOS Keychain, or `~/.claude/.credentials.json` with mode 600 on Linux). It does not read `MAYAR_API_KEY` from your environment.
 
 To set or change the key later, run this command in a Claude Code session:
 

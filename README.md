@@ -43,7 +43,7 @@ authenticate differently.
 Claude Code requires `"type": "http"` on a remote server. The plugin file at
 `plugins/mayar/.mcp.json` sends `Authorization: Bearer ${user_config.mayar_api_key}`.
 Claude Code asks for that key when you install or enable the plugin in a session. It
-stores the key in secure storage. It does not read `MAYAR_API_KEY` from the environment,
+stores the key outside `settings.json` (macOS Keychain, or `~/.claude/.credentials.json` with mode 600 on Linux). It does not read `MAYAR_API_KEY` from the environment,
 and it does not expand `${env:MAYAR_API_KEY}`.
 
 Load the plugin from a local clone:
@@ -106,7 +106,7 @@ mcp_servers:
 ### Claude Code
 
 When you install or enable the plugin in a Claude Code session, Claude Code asks
-for your production API key and stores it in secure storage. To set or change
+for your production API key and stores it outside `settings.json` (macOS Keychain, or `~/.claude/.credentials.json` with mode 600 on Linux). To set or change
 the key later, run `/plugin configure mayar@mayarid` in a session. Get a key
 from https://web.mayar.id/api-keys.
 

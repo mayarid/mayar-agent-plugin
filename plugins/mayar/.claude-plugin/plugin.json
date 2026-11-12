@@ -27,7 +27,7 @@
     "mayar_api_key": {
       "type": "string",
       "title": "Mayar API key",
-      "description": "Your Mayar API key from https://web.mayar.id/api-keys. Stored in secure storage.",
+      "description": "Your Mayar API key from https://web.mayar.id/api-keys. Claude Code keeps it out of settings.json.",
       "required": true,
       "sensitive": true
     }
