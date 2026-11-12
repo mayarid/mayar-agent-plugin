@@ -4,7 +4,7 @@
       "type": "http",
       "url": "https://mcp.mayar.id/mcp",
       "headers": {
-        "Authorization": "Bearer ${MAYAR_API_KEY}"
+        "Authorization": "Bearer ${user_config.mayar_api_key}"
       }
     }
   }

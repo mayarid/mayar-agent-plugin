@@ -37,14 +37,16 @@ repository also includes a Cursor config file at `.mcp.json`. Cursor and
 
 This repository also ships a Claude plugin in `plugins/mayar` (manifest, skill, license, and a
 Claude `.mcp.json`). Anthropic's directory can list that subfolder through the submission
-"Plugin path" field. The root `.mcp.json` stays the Cursor file, because the two clients expand
-environment variables differently.
+"Plugin path" field. The root `.mcp.json` stays the Cursor file, because the two clients
+authenticate differently.
 
-Claude Code requires `"type": "http"` on a remote server and expands `${MAYAR_API_KEY}` in
-headers. It does not expand `${env:MAYAR_API_KEY}`. The plugin file at
-`plugins/mayar/.mcp.json` uses the Claude Code form.
+Claude Code requires `"type": "http"` on a remote server. The plugin file at
+`plugins/mayar/.mcp.json` sends `Authorization: Bearer ${user_config.mayar_api_key}`.
+Claude Code asks for that key when you install or enable the plugin in a session. It
+stores the key outside `settings.json` (macOS Keychain, or `~/.claude/.credentials.json` with mode 600 on Linux). It does not read `MAYAR_API_KEY` from the environment,
+and it does not expand `${env:MAYAR_API_KEY}`.
 
-Set `MAYAR_API_KEY` (see below), then load the plugin from a local clone:
+Load the plugin from a local clone:
 
 ```sh
 claude --plugin-dir ./plugins/mayar
@@ -56,6 +58,12 @@ Or add this repository as a marketplace and install `mayar`:
 claude plugin marketplace add mayarid/mayar-agent-plugin
 claude plugin install mayar@mayarid
 ```
+
+A `--plugin-dir` or shell install does not open the key dialog. In a Claude Code
+session, run `/plugin configure` on the installed plugin to set the key. For a
+marketplace install, that command is `/plugin configure mayar@mayarid`. You can
+also pass `--config mayar_api_key=YOUR_KEY` to `claude plugin install`. See
+Claude Code under Set your API key.
 
 You can still add the server by hand with `claude mcp add` (see Claude Code under Set your API
 key). Mayar has no OAuth. On claude.ai and in Cowork, the plugin skill loads, but the Connectors
@@ -97,22 +105,26 @@ mcp_servers:
 
 ### Claude Code
 
-Set `MAYAR_API_KEY` to a real production key, then restart Claude Code. An unset
-variable and an empty one fail in different ways. If the variable is unset, Claude Code sends the unexpanded text `${MAYAR_API_KEY}` as
-the key, so the server can show as Connected, but every tool call fails because
-Mayar rejects that value. If the variable is set but empty, Claude Code expands
-it to an empty header. The server returns 401 and does not show as Connected.
+When you install or enable the plugin in a Claude Code session, Claude Code asks
+for your production API key and stores it outside `settings.json` (macOS Keychain, or `~/.claude/.credentials.json` with mode 600 on Linux). To set or change
+the key later, run `/plugin configure mayar@mayarid` in a session. Get a key
+from https://web.mayar.id/api-keys.
+
+If you installed the plugin from the shell, Claude Code does not prompt for the
+key. Pass `--config mayar_api_key=YOUR_KEY` on install, or run `/plugin
+configure mayar@mayarid` afterward and restart Claude Code.
 
 If you installed the plugin in `plugins/mayar`, Claude Code reads
-`Authorization: Bearer ${MAYAR_API_KEY}` from that folder's `.mcp.json`. To add the server
-by hand instead:
+`Authorization: Bearer ${user_config.mayar_api_key}` from that folder's
+`.mcp.json`. To add the server by hand instead:
 
 ```sh
 claude mcp add --transport http mayar https://mcp.mayar.id/mcp \
   --header "Authorization: Bearer $MAYAR_API_KEY"
 ```
 
-The shell expands `$MAYAR_API_KEY` when you run the command.
+The shell expands `$MAYAR_API_KEY` when you run the command. This by-hand
+server does not use the plugin's `userConfig` field.
 
 ### Other clients
 
