@@ -1,0 +1,26 @@
+{
+  "name": "mayar",
+  "displayName": "Mayar",
+  "version": "1.0.0",
+  "description": "Manage Mayar invoices, payment links, products, customers, transactions, memberships, coupons, webhooks and QRIS through Mayar's official hosted MCP server.",
+  "author": {
+    "name": "Mayar",
+    "url": "https://mayar.id/"
+  },
+  "homepage": "https://mayar.id/",
+  "repository": "https://github.com/mayarid/mayar-agent-plugin",
+  "license": "MIT",
+  "keywords": [
+    "mayar",
+    "payments",
+    "invoices",
+    "qris",
+    "indonesia",
+    "mcp"
+  ],
+  "icon": "./.claude-plugin/icon.png",
+  "privacyPolicyUrl": "https://mayar.id/kebijakan-privasi",
+  "termsOfServiceUrl": "https://mayar.id/kebijakan-layanan",
+  "documentationUrl": "https://mcp.mayar.id/docs",
+  "supportUrl": "https://github.com/mayarid/mayar-agent-plugin/issues"
+}
